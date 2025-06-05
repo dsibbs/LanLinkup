@@ -25,7 +25,6 @@ const registerSchema = z.object({
   confirmPassword: z.string().min(1, "Please confirm your password"),
   bio: z.string().optional(),
   location: z.string().optional(),
-  agreeTerms: z.boolean().refine(val => val === true, "You must agree to the terms"),
 }).refine(data => data.password === data.confirmPassword, {
   message: "Passwords don't match",
   path: ["confirmPassword"],
@@ -66,7 +65,6 @@ export default function AuthPage() {
       confirmPassword: "",
       bio: "",
       location: "",
-      agreeTerms: false,
     },
   });
 
@@ -78,7 +76,7 @@ export default function AuthPage() {
   };
 
   const onRegister = (data: RegisterFormData) => {
-    const { confirmPassword, agreeTerms, ...userData } = data;
+    const { confirmPassword, ...userData } = data;
     registerMutation.mutate(userData);
   };
 
@@ -291,19 +289,7 @@ export default function AuthPage() {
                   )}
                 </div>
 
-                <div className="flex items-center space-x-3">
-                  <Checkbox
-                    id="agreeTerms"
-                    {...registerForm.register("agreeTerms")}
-                    className="border-gray-600 data-[state=checked]:bg-accent-purple"
-                  />
-                  <Label htmlFor="agreeTerms" className="text-sm text-text-secondary">
-                    I agree to the Terms of Service and Privacy Policy
-                  </Label>
-                </div>
-                {registerForm.formState.errors.agreeTerms && (
-                  <p className="text-red-500 text-sm">{registerForm.formState.errors.agreeTerms.message}</p>
-                )}
+
 
                 <Button
                   type="submit"
