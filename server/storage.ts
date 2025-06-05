@@ -3,6 +3,8 @@ import { db } from "./db";
 import { eq, and, or, ilike, sql, desc, asc } from "drizzle-orm";
 import session from "express-session";
 import connectPg from "connect-pg-simple";
+
+type SessionStore = session.Store;
 import { pool } from "./db";
 
 const PostgresSessionStore = connectPg(session);
@@ -43,11 +45,11 @@ export interface IStorage {
   areFriends(userId1: number, userId2: number): Promise<boolean>;
   hasPendingFriendRequest(requesterId: number, addresseeId: number): Promise<boolean>;
 
-  sessionStore: session.SessionStore;
+  sessionStore: SessionStore;
 }
 
 export class DatabaseStorage implements IStorage {
-  sessionStore: session.SessionStore;
+  sessionStore: SessionStore;
 
   constructor() {
     this.sessionStore = new PostgresSessionStore({ 
@@ -291,7 +293,7 @@ export class DatabaseStorage implements IStorage {
     
     // Then delete the party
     const result = await db.delete(parties).where(eq(parties.id, id));
-    return result.rowCount > 0;
+    return (result.rowCount || 0) > 0;
   }
 
   async getUpcomingPartiesForUser(userId: number): Promise<PartyWithHost[]> {
@@ -363,7 +365,7 @@ export class DatabaseStorage implements IStorage {
           eq(partyAttendees.userId, userId)
         )
       );
-    return result.rowCount > 0;
+    return (result.rowCount || 0) > 0;
   }
 
   async getPartyAttendees(partyId: number): Promise<User[]> {
@@ -433,14 +435,14 @@ export class DatabaseStorage implements IStorage {
         updatedAt: new Date()
       })
       .where(eq(friendships.id, requestId));
-    return result.rowCount > 0;
+    return (result.rowCount || 0) > 0;
   }
 
   async declineFriendRequest(requestId: number): Promise<boolean> {
     const result = await db
       .delete(friendships)
       .where(eq(friendships.id, requestId));
-    return result.rowCount > 0;
+    return (result.rowCount || 0) > 0;
   }
 
   async getFriends(userId: number): Promise<User[]> {
