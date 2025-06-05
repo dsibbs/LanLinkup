@@ -24,7 +24,7 @@ export default function Discover({ onNavigate }: DiscoverProps) {
     queryFn: async () => {
       const params = new URLSearchParams();
       if (searchQuery) params.append("search", searchQuery);
-      if (gameFilter) params.append("game", gameFilter);
+      if (gameFilter && gameFilter !== "all") params.append("game", gameFilter);
       
       const response = await fetch(`/api/parties?${params}`);
       if (!response.ok) throw new Error("Failed to fetch parties");
@@ -90,7 +90,7 @@ export default function Discover({ onNavigate }: DiscoverProps) {
                   <SelectValue placeholder="All Games" />
                 </SelectTrigger>
                 <SelectContent className="bg-dark-tertiary border-gray-600">
-                  <SelectItem value="">All Games</SelectItem>
+                  <SelectItem value="all">All Games</SelectItem>
                   <SelectItem value="Counter-Strike 2">Counter-Strike 2</SelectItem>
                   <SelectItem value="Valorant">Valorant</SelectItem>
                   <SelectItem value="League of Legends">League of Legends</SelectItem>
