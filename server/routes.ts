@@ -14,14 +14,17 @@ export function registerRoutes(app: Express): Server {
     if (!req.isAuthenticated()) return res.status(401).json({ message: "Unauthorized" });
 
     try {
+      console.log("Party creation request body:", req.body);
       const partyData = insertPartySchema.parse(req.body);
+      console.log("Parsed party data:", partyData);
       const party = await storage.createParty({
         ...partyData,
         hostId: req.user!.id,
       });
       res.json(party);
     } catch (error) {
-      res.status(400).json({ message: "Invalid party data" });
+      console.error("Party creation error:", error);
+      res.status(400).json({ message: "Invalid party data", error: error.message });
     }
   });
 
