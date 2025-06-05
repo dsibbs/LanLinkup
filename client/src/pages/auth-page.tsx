@@ -9,7 +9,6 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { insertUserSchema } from "@shared/schema";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Gamepad, Eye, EyeOff } from "lucide-react";
 
@@ -36,13 +35,12 @@ type LoginFormData = z.infer<typeof loginSchema>;
 type RegisterFormData = z.infer<typeof registerSchema>;
 
 export default function AuthPage() {
-  const [, setLocation] = useLocation();
   const [isLoginForm, setIsLoginForm] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [, setLocation] = useLocation();
   const { user, loginMutation, registerMutation } = useAuth();
 
-  // Redirect if already logged in
   useEffect(() => {
     if (user) {
       setLocation("/");
@@ -94,22 +92,21 @@ export default function AuthPage() {
       <div className="flex-1 flex items-center justify-center p-6">
         <Card className="w-full max-w-md bg-dark-secondary border-dark-tertiary">
           <CardContent className="p-8">
-            {/* Logo */}
             <div className="text-center mb-8">
-              <div className="flex items-center justify-center space-x-2 mb-4">
-                <Gamepad className="h-8 w-8 text-accent-purple" />
-                <span className="text-2xl font-bold text-accent-purple">LAN Linkup</span>
-              </div>
-              <h2 className="text-xl font-semibold text-text-primary">
-                {isLoginForm ? "Welcome Back!" : "Join the Community!"}
+              <Gamepad className="h-12 w-12 text-accent-purple mx-auto mb-4" />
+              <h2 className="text-2xl font-bold text-text-primary">
+                {isLoginForm ? "Welcome Back" : "Join LAN Linkup"}
               </h2>
-              <p className="text-text-secondary">
-                {isLoginForm ? "Sign in to your gaming account" : "Create your gaming account"}
+              <p className="text-text-secondary mt-2">
+                {isLoginForm 
+                  ? "Sign in to your gaming account" 
+                  : "Create your gaming profile today"
+                }
               </p>
             </div>
 
-            {/* Login Form */}
             {isLoginForm ? (
+              /* Login Form */
               <Form {...loginForm}>
                 <form onSubmit={loginForm.handleSubmit(onLogin)} className="space-y-6">
                   <FormField
@@ -164,26 +161,24 @@ export default function AuthPage() {
                     )}
                   />
 
-                  <div className="flex items-center justify-between">
-                    <FormField
-                      control={loginForm.control}
-                      name="rememberMe"
-                      render={({ field }) => (
-                        <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                          <FormControl>
-                            <Checkbox
-                              checked={field.value}
-                              onCheckedChange={field.onChange}
-                              className="border-gray-600 data-[state=checked]:bg-accent-purple"
-                            />
-                          </FormControl>
-                          <FormLabel className="text-sm text-text-secondary">
-                            Remember me
-                          </FormLabel>
-                        </FormItem>
-                      )}
-                    />
-                  </div>
+                  <FormField
+                    control={loginForm.control}
+                    name="rememberMe"
+                    render={({ field }) => (
+                      <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                        <FormControl>
+                          <Checkbox
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                            className="border-gray-600 data-[state=checked]:bg-accent-purple"
+                          />
+                        </FormControl>
+                        <FormLabel className="text-sm text-text-secondary">
+                          Remember me
+                        </FormLabel>
+                      </FormItem>
+                    )}
+                  />
 
                   <Button
                     type="submit"
@@ -202,7 +197,7 @@ export default function AuthPage() {
                         className="text-accent-purple hover:text-purple-400 p-0"
                         onClick={() => setIsLoginForm(false)}
                       >
-                        Create one
+                        Sign up
                       </Button>
                     </p>
                   </div>
@@ -365,10 +360,10 @@ export default function AuthPage() {
               <span className="text-text-primary">Connect with fellow gamers in your area</span>
             </div>
             <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-accent-cyan rounded-full flex items-center justify-center">
+              <div className="w-8 h-8 bg-accent-purple rounded-full flex items-center justify-center">
                 <span className="text-white font-bold">3</span>
               </div>
-              <span className="text-text-primary">Experience epic gaming sessions together</span>
+              <span className="text-text-primary">Build lasting friendships through gaming</span>
             </div>
           </div>
         </div>
