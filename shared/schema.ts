@@ -93,6 +93,8 @@ export const insertPartySchema = createInsertSchema(parties).omit({
   id: true,
   hostId: true,
   createdAt: true,
+}).extend({
+  date: z.string().transform((val) => new Date(val)),
 });
 
 export const insertPartyAttendeeSchema = createInsertSchema(partyAttendees).omit({
