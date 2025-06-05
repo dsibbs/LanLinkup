@@ -56,9 +56,12 @@ export function registerRoutes(app: Express): Server {
     if (!req.isAuthenticated()) return res.status(401).json({ message: "Unauthorized" });
 
     try {
+      console.log("Fetching parties for user ID:", req.user!.id);
       const parties = await storage.getPartiesByHost(req.user!.id);
+      console.log("Found parties:", parties);
       res.json(parties);
     } catch (error) {
+      console.error("Error fetching my parties:", error);
       res.status(500).json({ message: "Failed to fetch parties" });
     }
   });
