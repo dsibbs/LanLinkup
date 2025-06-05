@@ -1,0 +1,150 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --background: 221 39% 11%; /* #0F172A */
+  --foreground: 210 40% 98%; /* #F1F5F9 */
+  --muted: 215 28% 17%; /* #1E293B */
+  --muted-foreground: 215 20% 65%; /* #94A3B8 */
+  --popover: 221 39% 11%; /* #0F172A */
+  --popover-foreground: 210 40% 98%; /* #F1F5F9 */
+  --card: 215 28% 17%; /* #1E293B */
+  --card-foreground: 210 40% 98%; /* #F1F5F9 */
+  --border: 215 28% 17%; /* #1E293B */
+  --input: 215 28% 17%; /* #1E293B */
+  --primary: 217 91% 60%; /* #3B82F6 */
+  --primary-foreground: 210 40% 98%; /* #F1F5F9 */
+  --secondary: 160 84% 39%; /* #10B981 */
+  --secondary-foreground: 210 40% 98%; /* #F1F5F9 */
+  --accent: 262 83% 58%; /* #8B5CF6 */
+  --accent-foreground: 210 40% 98%; /* #F1F5F9 */
+  --destructive: 0 84% 60%; /* #EF4444 */
+  --destructive-foreground: 210 40% 98%; /* #F1F5F9 */
+  --ring: 217 91% 60%; /* #3B82F6 */
+  --radius: 0.75rem;
+
+  /* Gaming theme custom colors */
+  --gaming-dark: 221 39% 11%; /* #0F172A */
+  --gaming-darker: 222 84% 5%; /* #020617 */
+  --gaming-card: 215 28% 17%; /* #1E293B */
+  --gaming-blue: 217 91% 60%; /* #3B82F6 */
+  --gaming-green: 160 84% 39%; /* #10B981 */
+  --gaming-purple: 262 83% 58%; /* #8B5CF6 */
+  --gaming-text: 210 40% 98%; /* #F1F5F9 */
+  --gaming-text-muted: 215 20% 65%; /* #94A3B8 */
+}
+
+.dark {
+  --background: 222 84% 5%; /* #020617 */
+  --foreground: 210 40% 98%; /* #F1F5F9 */
+  --muted: 215 28% 17%; /* #1E293B */
+  --muted-foreground: 215 20% 65%; /* #94A3B8 */
+  --popover: 222 84% 5%; /* #020617 */
+  --popover-foreground: 210 40% 98%; /* #F1F5F9 */
+  --card: 215 28% 17%; /* #1E293B */
+  --card-foreground: 210 40% 98%; /* #F1F5F9 */
+  --border: 215 28% 17%; /* #1E293B */
+  --input: 215 28% 17%; /* #1E293B */
+  --primary: 217 91% 60%; /* #3B82F6 */
+  --primary-foreground: 210 40% 98%; /* #F1F5F9 */
+  --secondary: 160 84% 39%; /* #10B981 */
+  --secondary-foreground: 210 40% 98%; /* #F1F5F9 */
+  --accent: 262 83% 58%; /* #8B5CF6 */
+  --accent-foreground: 210 40% 98%; /* #F1F5F9 */
+  --destructive: 0 84% 60%; /* #EF4444 */
+  --destructive-foreground: 210 40% 98%; /* #F1F5F9 */
+  --ring: 217 91% 60%; /* #3B82F6 */
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    @apply dark;
+  }
+
+  body {
+    @apply font-sans antialiased;
+    @apply bg-gaming-darker text-gaming-text;
+    font-family: 'Inter', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold;
+  }
+}
+
+@layer utilities {
+  .bg-gaming-darker {
+    background-color: hsl(var(--gaming-darker));
+  }
+  
+  .bg-gaming-dark {
+    background-color: hsl(var(--gaming-dark));
+  }
+  
+  .bg-gaming-card {
+    background-color: hsl(var(--gaming-card));
+  }
+  
+  .text-gaming-text {
+    color: hsl(var(--gaming-text));
+  }
+  
+  .text-gaming-text-muted {
+    color: hsl(var(--gaming-text-muted));
+  }
+  
+  .text-gaming-blue {
+    color: hsl(var(--gaming-blue));
+  }
+  
+  .text-gaming-green {
+    color: hsl(var(--gaming-green));
+  }
+  
+  .text-gaming-purple {
+    color: hsl(var(--gaming-purple));
+  }
+  
+  .border-gaming-blue {
+    border-color: hsl(var(--gaming-blue));
+  }
+  
+  .border-gaming-green {
+    border-color: hsl(var(--gaming-green));
+  }
+  
+  .border-gaming-purple {
+    border-color: hsl(var(--gaming-purple));
+  }
+  
+  .shadow-gaming {
+    box-shadow: 0 0 20px hsla(var(--gaming-blue), 0.3);
+  }
+  
+  .shadow-gaming-green {
+    box-shadow: 0 0 20px hsla(var(--gaming-green), 0.3);
+  }
+  
+  .shadow-gaming-card {
+    box-shadow: 0 8px 32px hsla(0, 0%, 0%, 0.3);
+  }
+  
+  .gradient-gaming-primary {
+    background: linear-gradient(to right, hsl(var(--gaming-blue)), hsl(var(--gaming-green)));
+  }
+  
+  .gradient-gaming-secondary {
+    background: linear-gradient(to right, hsl(var(--gaming-green)), hsl(var(--gaming-purple)));
+  }
+  
+  .gradient-gaming-accent {
+    background: linear-gradient(to right, hsl(var(--gaming-purple)), hsl(var(--gaming-blue)));
+  }
+}
