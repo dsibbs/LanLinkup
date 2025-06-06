@@ -1,11 +1,22 @@
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent } from "@/components/ui/card";
 import { Trophy, Users, UsersRound, Star, Gamepad } from "lucide-react";
-import type { PartyWithHost } from "@shared/schema";
+import type { PartyWithHost, User } from "@shared/schema";
+import { useAuth } from "@/hooks/use-auth";
 
 export default function Sidebar() {
+  const { user } = useAuth();
+
   const { data: upcomingParties = [] } = useQuery<PartyWithHost[]>({
     queryKey: ["/api/parties/upcoming"],
+  });
+  const { data: myParties = [], isLoading: partiesLoading } = useQuery<PartyWithHost[]>({
+    queryKey: ["/api/parties/my"],
+    enabled: !!user,
+  });
+
+  const { data: friends = [], isLoading: friendsLoading } = useQuery<User[]>({
+    queryKey: ["/api/friends"],
   });
 
   return (
@@ -19,7 +30,7 @@ export default function Sidebar() {
               <div className="space-y-2">
                 <div className="flex justify-between">
                   <span className="text-sm text-text-secondary">Parties Hosted</span>
-                  <span className="text-accent-purple font-semibold">-</span>
+                  <span className="text-accent-purple font-semibold">{myParties.length}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-sm text-text-secondary">Parties Attended</span>
@@ -27,7 +38,7 @@ export default function Sidebar() {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-sm text-text-secondary">Friends</span>
-                  <span className="text-accent-cyan font-semibold">-</span>
+                  <span className="text-accent-cyan font-semibold">{friends.length}</span>
                 </div>
               </div>
             </CardContent>

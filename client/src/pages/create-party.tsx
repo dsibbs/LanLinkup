@@ -112,24 +112,13 @@ export default function CreateParty({ onNavigate }: CreatePartyProps) {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel className="text-text-secondary">Game *</FormLabel>
-                        <Select onValueChange={field.onChange} defaultValue={field.value}>
-                          <FormControl>
-                            <SelectTrigger className="bg-dark-tertiary border-gray-600 text-text-primary focus:border-accent-purple">
-                              <SelectValue placeholder="Select a game..." />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent className="bg-dark-tertiary border-gray-600">
-                            <SelectItem value="Counter-Strike 2">Counter-Strike 2</SelectItem>
-                            <SelectItem value="Valorant">Valorant</SelectItem>
-                            <SelectItem value="League of Legends">League of Legends</SelectItem>
-                            <SelectItem value="Dota 2">Dota 2</SelectItem>
-                            <SelectItem value="Overwatch 2">Overwatch 2</SelectItem>
-                            <SelectItem value="Apex Legends">Apex Legends</SelectItem>
-                            <SelectItem value="Need for Speed Heat">Need for Speed Heat</SelectItem>
-                            <SelectItem value="Age of Empires IV">Age of Empires IV</SelectItem>
-                            <SelectItem value="Other">Other</SelectItem>
-                          </SelectContent>
-                        </Select>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            placeholder="Enter the game name"
+                            className="bg-dark-tertiary border-gray-600 text-text-primary placeholder-text-secondary focus:border-accent-purple"
+                          />
+                        </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
