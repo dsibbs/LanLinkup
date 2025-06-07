@@ -58,4 +58,9 @@ app.use((req, res, next) => {
   serveStatic(app); // Make sure this doesn't import `vite` internally
 
   const port = Number(process.env.PORT) || 5000;
-  const host
+  const host = '0.0.0.0'; // use this on Heroku to bind to any interface
+
+  server.listen({ port, host }, () => {
+    log(`🚀 Production server running on port ${port}`);
+  });
+})();
