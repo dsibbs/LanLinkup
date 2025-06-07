@@ -4,7 +4,6 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import { registerRoutes } from './routes';
-import { log } from './utils/log'; // Create this if needed
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -13,7 +12,6 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// Request logging
 app.use((req, res, next) => {
   const start = Date.now();
   const path = req.path;
@@ -37,7 +35,6 @@ app.use((req, res, next) => {
         logLine = logLine.slice(0, 79) + '…';
       }
 
-      log(logLine);
     }
   });
 
@@ -68,6 +65,5 @@ app.use((req, res, next) => {
   const host = '0.0.0.0';
 
   server.listen({ port, host }, () => {
-    log(`🚀 Production server running on port ${port}`);
   });
 })();
