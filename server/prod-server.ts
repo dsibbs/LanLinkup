@@ -4,6 +4,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import { registerRoutes } from './routes';
+import { log } from './utils/log';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -12,10 +13,11 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+// Request logging middleware
 app.use((req, res, next) => {
   const start = Date.now();
   const path = req.path;
-  let capturedJsonResponse: Record<string, any> | undefined = undefined;
+  let capturedJsonResponse: Record<string, any> | undefined;
 
   const originalResJson = res.json;
   res.json = function (bodyJson, ...args) {
@@ -35,6 +37,7 @@ app.use((req, res, next) => {
         logLine = logLine.slice(0, 79) + '…';
       }
 
+      log(logLine);
     }
   });
 
@@ -42,13 +45,14 @@ app.use((req, res, next) => {
 });
 
 (async () => {
+  // Register your API routes
   const server = await registerRoutes(app);
 
-  // Serve static files (frontend)
-  const clientPath = path.join(__dirname, 'client'); // adjust if your build path is different
+  // Serve static files from the directory where this file lives (dist/)
+  const clientPath = __dirname;
   app.use(express.static(clientPath));
 
-  // Handle client-side routing (SPA)
+  // SPA fallback: serve index.html for all unmatched routes
   app.get('*', (_req, res) => {
     res.sendFile(path.join(clientPath, 'index.html'));
   });
@@ -65,5 +69,6 @@ app.use((req, res, next) => {
   const host = '0.0.0.0';
 
   server.listen({ port, host }, () => {
+    log(`🚀 Production server running on port ${port}`);
   });
 })();
