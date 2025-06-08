@@ -57,7 +57,7 @@ export function registerRoutes(app: Express): Server {
     if (!req.isAuthenticated()) return res.status(401).json({ message: "Unauthorized" });
 
     try {
-      console.log("Fetching parties for user ID:", req.user!.id);
+      console.log("Fetching parties for the user ID:", req.user!.id);
       const parties = await storage.getPartiesByHost(req.user!.id);
       console.log("Found parties:", parties);
       res.json(parties);
@@ -275,8 +275,9 @@ export function registerRoutes(app: Express): Server {
   // User profile routes
   app.get("/api/users/:id", async (req, res) => {
     try {
-      const user = await storage.getUserWithStats(parseInt(req.params.id));
+      console.log("user with id");
 
+      const user = await storage.getUserWithStats(parseInt(req.params.id));
       if (!user){ 
         return res.status(404).json({ message: "User not found" });
       }

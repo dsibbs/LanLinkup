@@ -30,9 +30,14 @@ export default function Profile({ onNavigate }: ProfileProps) {
   const { user } = useAuth();
   const { toast } = useToast();
 
-  const { data: userStats } = useQuery<UserWithStats>({
-    queryKey: ["/api/users", user?.id],
+  const { data: userStats, isLoading, error } = useQuery<UserWithStats>({
+    queryKey: ["userStats", user?.id],
     enabled: !!user,
+    queryFn: async () => {
+      const response = await fetch(`/api/users/${user.id}`);
+      if (!response.ok) throw new Error("Failed to fetch user stats");
+      return response.json();
+    },
   });
 
   const { data: myParties = [] } = useQuery<PartyWithHost[]>({
