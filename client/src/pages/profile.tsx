@@ -74,8 +74,21 @@ export default function Profile({ onNavigate }: ProfileProps) {
     updateProfileMutation.mutate(data);
   };
 
-  if (!user || !userStats) return null;
-
+  if (!user) {
+    return (
+      <div className="text-center text-red-500 mt-10">
+        Error: User is not logged in or user context is unavailable.
+      </div>
+    );
+  }
+  
+  if (!userStats) {
+    return (
+      <div className="text-center text-red-500 mt-10">
+        Error: Unable to load user profile data. Please try again later.
+      </div>
+    );
+  }
   return (
     <div className="space-y-8">
       {/* Profile Header */}

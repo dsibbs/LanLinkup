@@ -55,13 +55,6 @@ export default function Navigation({ currentView, onNavigate }: NavigationProps)
 
           {/* Right side actions */}
           <div className="flex items-center space-x-3">
-            {/* Notifications */}
-            <Button variant="ghost" size="sm" className="relative text-text-secondary hover:text-accent-purple">
-              <Bell className="h-5 w-5" />
-              <span className="absolute -top-1 -right-1 bg-accent-purple text-xs rounded-full h-5 w-5 flex items-center justify-center text-white">
-                3
-              </span>
-            </Button>
 
             {/* Create Party Button */}
             <Button

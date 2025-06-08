@@ -77,16 +77,16 @@ export default function Sidebar() {
               <h3 className="font-semibold text-sm text-text-secondary mb-3">Popular Games</h3>
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-text-primary">Counter-Strike 2</span>
-                  <span className="text-xs bg-accent-purple px-2 py-1 rounded text-white">FPS</span>
+                  <span className="text-sm text-text-primary">Elder Scrolls Online</span>
+                  <span className="text-xs bg-accent-purple px-2 py-1 rounded text-white">MMORPG</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-text-primary">Valorant</span>
-                  <span className="text-xs bg-accent-blue px-2 py-1 rounded text-white">FPS</span>
+                  <span className="text-sm text-text-primary">Brawlhalla</span>
+                  <span className="text-xs bg-accent-blue px-2 py-1 rounded text-white">Platform</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-text-primary">League of Legends</span>
-                  <span className="text-xs bg-accent-cyan px-2 py-1 rounded text-white">MOBA</span>
+                  <span className="text-sm text-text-primary">For Honor</span>
+                  <span className="text-xs bg-accent-cyan px-2 py-1 rounded text-white">PVP</span>
                 </div>
               </div>
             </CardContent>

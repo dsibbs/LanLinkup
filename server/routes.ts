@@ -4,6 +4,7 @@ import { storage } from "./storage";
 import { setupAuth } from "./auth";
 import { insertPartySchema, insertFriendshipSchema } from "@shared/schema";
 import { z } from "zod";
+import { Console } from "console";
 
 export function registerRoutes(app: Express): Server {
   // Setup authentication routes
@@ -275,7 +276,11 @@ export function registerRoutes(app: Express): Server {
   app.get("/api/users/:id", async (req, res) => {
     try {
       const user = await storage.getUserWithStats(parseInt(req.params.id));
-      if (!user) return res.status(404).json({ message: "User not found" });
+
+      if (!user){ 
+        return res.status(404).json({ message: "User not found" });
+      }
+
       
       // Remove password from response
       const { password, ...userWithoutPassword } = user;
