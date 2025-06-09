@@ -278,22 +278,6 @@ export default function CreateParty({ onNavigate }: CreatePartyProps) {
                 
                 <Button
                   type="button"
-                  variant="outline"
-                  className="bg-dark-tertiary border-gray-600 hover:bg-gray-600 px-8 py-3"
-                  onClick={() => {
-                    // Save as draft functionality could be added here
-                    toast({
-                      title: "Draft saved",
-                      description: "Your party draft has been saved locally.",
-                    });
-                  }}
-                >
-                  <Save className="h-4 w-4 mr-2" />
-                  Save Draft
-                </Button>
-                
-                <Button
-                  type="button"
                   variant="ghost"
                   className="text-text-secondary hover:text-text-primary"
                   onClick={() => onNavigate("dashboard")}
