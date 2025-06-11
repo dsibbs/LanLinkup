@@ -132,8 +132,7 @@ export default function PartyCard({
           <div className="flex items-center text-sm text-text-secondary">
           <MapPin className="h-4 w-4 mr-2 flex-shrink-0" />
           <span>{party.address}</span>
-
-        </div>
+          </div>
           )}
           
         </div>

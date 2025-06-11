@@ -126,7 +126,7 @@ export default function Friends({ onNavigate }: FriendsProps) {
             <div className="flex-1">
               <div className="relative">
                 <Input
-                  placeholder="Search for gamers by username or email..."
+                  placeholder="Search for gamers by username"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleSearch()}
@@ -158,7 +158,6 @@ export default function Friends({ onNavigate }: FriendsProps) {
                         </div>
                         <div className="flex-1">
                           <h3 className="font-semibold text-text-primary">{user.username}</h3>
-                          <p className="text-text-secondary text-sm">{user.email}</p>
                         </div>
                       </div>
                       {user.bio && (

@@ -9,7 +9,6 @@ interface FriendCardProps {
 }
 
 const getOnlineStatus = () => {
-  // In a real app, this would come from the user data
   const statuses = ["online", "away", "offline"];
   return statuses[Math.floor(Math.random() * statuses.length)];
 };
@@ -53,11 +52,9 @@ export default function FriendCard({ friend }: FriendCardProps) {
                 {friend.username[0].toUpperCase()}
               </span>
             </div>
-            <div className={`absolute -bottom-1 -right-1 w-4 h-4 ${getStatusColor(status)} rounded-full border-2 border-dark-tertiary`}></div>
           </div>
           <div className="flex-1 min-w-0">
             <h3 className="font-semibold text-text-primary truncate">{friend.username}</h3>
-            <p className="text-text-secondary text-sm">{getStatusText(status)}</p>
           </div>
         </div>
 

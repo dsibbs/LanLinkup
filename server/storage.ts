@@ -133,7 +133,6 @@ export class DatabaseStorage implements IStorage {
         and(
           or(
             ilike(users.username, `%${query}%`),
-            ilike(users.email, `%${query}%`)
           ),
           sql`${users.id} != ${excludeUserId}`
         )
