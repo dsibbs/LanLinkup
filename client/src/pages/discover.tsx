@@ -118,10 +118,8 @@ export default function Discover({ onNavigate }: DiscoverProps) {
                 <SortAsc className="h-4 w-4 mr-2" />
                 Sort by Date
               </Button>
-              <Button variant="outline" className="bg-dark-tertiary border-gray-600 hover:bg-gray-600">
-                <Map className="h-4 w-4 mr-2" />
-                Map View
-              </Button>
+              
+
             </div>
           </div>
         </CardContent>
