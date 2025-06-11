@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { AddressAutocomplete } from "@/components/AddressAutocomplete";
 import { insertPartySchema } from "@shared/schema";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -250,11 +251,7 @@ export default function CreateParty({ onNavigate }: CreatePartyProps) {
                     <FormItem>
                       <FormLabel className="text-text-secondary">Full Address *</FormLabel>
                       <FormControl>
-                        <Input
-                          {...field}
-                          placeholder="123 Gaming Street, San Francisco, CA 94102"
-                          className="bg-dark-tertiary border-gray-600 text-text-primary placeholder-text-secondary focus:border-accent-purple"
-                        />
+                        <AddressAutocomplete value={field.value} onChange={field.onChange} />
                       </FormControl>
                       <p className="text-text-secondary text-xs mt-1">
                         This will only be shared with confirmed attendees
