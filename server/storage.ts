@@ -3,6 +3,7 @@ import { db } from "./db";
 import { eq, and, or, ilike, sql, desc, asc } from "drizzle-orm";
 import session from "express-session";
 import connectPg from "connect-pg-simple";
+import axios from "axios";
 
 type SessionStore = session.Store;
 import { pool } from "./db";
@@ -142,6 +143,8 @@ export class DatabaseStorage implements IStorage {
 
   // Party methods
   async createParty(party: InsertParty & { hostId: number }): Promise<Party> {
+
+
     const [newParty] = await db
       .insert(parties)
       .values(party)
@@ -545,6 +548,7 @@ export class DatabaseStorage implements IStorage {
       );
     return !!result;
   }
+
 }
 
 export const storage = new DatabaseStorage();

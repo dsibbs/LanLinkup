@@ -1,6 +1,9 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
+import { map } from "./map";
+
+
 import { setupAuth } from "./auth";
 import { insertPartySchema, insertFriendshipSchema } from "@shared/schema";
 import { z } from "zod";
@@ -18,6 +21,10 @@ export function registerRoutes(app: Express): Server {
       console.log("Party creation request body:", req.body);
       const partyData = insertPartySchema.parse(req.body);
       console.log("Parsed party data:", partyData);
+      const { latitude, longitude } = await map.geocodeAddress(partyData.address);
+
+      partyData.latitude=latitude;
+      partyData.longitude =longitude;
       const party = await storage.createParty({
         ...partyData,
         hostId: req.user!.id,
