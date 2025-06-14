@@ -1,4 +1,4 @@
-import { pgTable, text, serial, integer, boolean, timestamp, varchar } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, integer, boolean, timestamp, varchar,real } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 import { relations } from "drizzle-orm";
@@ -25,6 +25,8 @@ export const parties = pgTable("parties", {
   date: timestamp("date").notNull(),
   hostId: integer("host_id").notNull().references(() => users.id),
   createdAt: timestamp("created_at").defaultNow().notNull(),
+  latitude: real("latitude"),
+  longitude: real("longitude"),
 });
 
 export const partyAttendees = pgTable("party_attendees", {
