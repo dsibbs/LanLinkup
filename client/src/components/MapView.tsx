@@ -33,8 +33,8 @@ export default function MapView({ parties }: MapViewProps) {
           <Marker
             key={party.id}
             position={{
-              lat: party.lat,
-              lng: party.lng,
+              lat: party.latitude,
+              lng: party.longitude,
             }}
           />
         ))}
