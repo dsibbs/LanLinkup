@@ -38,7 +38,7 @@ export function registerRoutes(app: Express): Server {
 
   app.get("/api/parties", async (req, res) => {
     try {
-      const { search, game, limit = "20", offset = "0" } = req.query;
+      const { search, game, limit = "20", offset = "0", includeFinished } = req.query;
       
       if (search && typeof search === "string") {
         const parties = await storage.searchParties(
