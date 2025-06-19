@@ -20,6 +20,7 @@ export default function Discover({ onNavigate }: DiscoverProps) {
   const [gameFilter, setGameFilter] = useState("");
   const [viewMode, setViewMode] = useState<"list" | "map">("list");
   const { toast } = useToast();
+  const [includeFinished, setIncludeFinished] = useState(false);
 
   const { data: parties = [], isLoading } = useQuery<PartyWithHost[]>({
     queryKey: ["/api/parties", { search: searchQuery, game: gameFilter }],
@@ -90,7 +91,18 @@ export default function Discover({ onNavigate }: DiscoverProps) {
               </Button>
             </div>
           </div>
-
+<div className="mt-4 flex items-center space-x-2">
+  <input
+    type="checkbox"
+    id="includeFinished"
+    checked={includeFinished}
+    onChange={(e) => setIncludeFinished(e.target.checked)}
+    className="form-checkbox text-accent-purple bg-dark-tertiary border-gray-600"
+  />
+  <label htmlFor="includeFinished" className="text-sm text-text-secondary">
+    Include finished parties
+  </label>
+</div>
           <div className="flex items-center justify-between mt-6">
             <p className="text-text-secondary">
               Found <span className="text-accent-purple font-semibold">{parties.length}</span> parties
