@@ -357,8 +357,8 @@ export class DatabaseStorage implements IStorage {
       return null;
     }
   }
-
   async leaveParty(partyId: number, userId: number): Promise<boolean> {
+    console.log(`Attempting to remove user ${userId} from party ${partyId}`);
     const result = await db
       .delete(partyAttendees)
       .where(
@@ -367,20 +367,25 @@ export class DatabaseStorage implements IStorage {
           eq(partyAttendees.userId, userId)
         )
       );
-    return (result.rowCount || 0) > 0;
+    const success = (result.rowCount || 0) > 0;
+    console.log(`leaveParty result for user ${userId} and party ${partyId}: ${success}`);
+    return success;
   }
 
   async getPartyAttendees(partyId: number): Promise<User[]> {
+    console.log(`Fetching attendees for party ${partyId}`);
     const results = await db
       .select({ user: users })
       .from(partyAttendees)
       .innerJoin(users, eq(partyAttendees.userId, users.id))
       .where(eq(partyAttendees.partyId, partyId));
-
+    
+    console.log(`Found ${results.length} attendees for party ${partyId}`);
     return results.map(result => result.user);
   }
 
   async isUserAttending(partyId: number, userId: number): Promise<boolean> {
+    console.log(`Checking if user ${userId} is attending party ${partyId}`);
     const [result] = await db
       .select()
       .from(partyAttendees)
@@ -390,13 +395,14 @@ export class DatabaseStorage implements IStorage {
           eq(partyAttendees.userId, userId)
         )
       );
-    return !!result;
+    const attending = !!result;
+    console.log(`User ${userId} attending party ${partyId}: ${attending}`);
+    return attending;
   }
 
-  // Friendship methods
   async sendFriendRequest(requesterId: number, addresseeId: number): Promise<Friendship | null> {
+    console.log(`Sending friend request from ${requesterId} to ${addresseeId}`);
     try {
-      // Check if they're already friends or have pending request
       const existingFriendship = await db
         .select()
         .from(friendships)
@@ -413,7 +419,10 @@ export class DatabaseStorage implements IStorage {
           )
         );
 
-      if (existingFriendship.length > 0) return null;
+      if (existingFriendship.length > 0) {
+        console.log(`Friend request already exists between ${requesterId} and ${addresseeId}`);
+        return null;
+      }
 
       const [friendship] = await db
         .insert(friendships)
@@ -423,13 +432,17 @@ export class DatabaseStorage implements IStorage {
           status: "pending",
         })
         .returning();
+
+      console.log(`Friend request created: ${JSON.stringify(friendship)}`);
       return friendship;
     } catch (error) {
+      console.error(`Error sending friend request: ${error}`);
       return null;
     }
   }
 
   async acceptFriendRequest(requestId: number): Promise<boolean> {
+    console.log(`Accepting friend request ${requestId}`);
     const result = await db
       .update(friendships)
       .set({ 
@@ -437,15 +450,23 @@ export class DatabaseStorage implements IStorage {
         updatedAt: new Date()
       })
       .where(eq(friendships.id, requestId));
-    return (result.rowCount || 0) > 0;
+    
+    const success = (result.rowCount || 0) > 0;
+    console.log(`Friend request ${requestId} accepted: ${success}`);
+    return success;
   }
 
   async declineFriendRequest(requestId: number): Promise<boolean> {
+    console.log(`Declining friend request ${requestId}`);
     const result = await db
       .delete(friendships)
       .where(eq(friendships.id, requestId));
-    return (result.rowCount || 0) > 0;
+
+    const success = (result.rowCount || 0) > 0;
+    console.log(`Friend request ${requestId} declined: ${success}`);
+    return success;
   }
+
 
   async getFriends(userId: number): Promise<User[]> {
     const results = await db
