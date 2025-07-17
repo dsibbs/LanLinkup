@@ -2,7 +2,17 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { Calendar, MapPin, Users, Edit, Trash2, UserPlus, Eye, Lock, Globe } from "lucide-react";
+import {
+  Calendar,
+  MapPin,
+  Users,
+  Edit,
+  Trash2,
+  UserPlus,
+  Eye,
+  Lock,
+  Globe,
+} from "lucide-react";
 import type { PartyWithHost } from "@shared/schema";
 
 interface PartyCardProps {
@@ -57,7 +67,7 @@ const getVisibilityColor = (visibility: string) => {
 const getStatusBadge = (party: PartyWithHost) => {
   const now = new Date();
   const partyDate = new Date(party.date);
-  
+
   if (partyDate < now) {
     return <Badge className="bg-gray-600 text-gray-100">Completed</Badge>;
   } else if (party.attendeeCount >= party.capacity) {
@@ -67,13 +77,13 @@ const getStatusBadge = (party: PartyWithHost) => {
   }
 };
 
-export default function PartyCard({ 
-  party, 
-  showEditActions, 
-  onJoin, 
-  onEdit, 
+export default function PartyCard({
+  party,
+  showEditActions,
+  onJoin,
+  onEdit,
   onCancel,
-  isJoining = false 
+  isJoining = false,
 }: PartyCardProps) {
   const capacityPercentage = (party.attendeeCount / party.capacity) * 100;
   const isFull = party.attendeeCount >= party.capacity;
@@ -88,7 +98,9 @@ export default function PartyCard({
               {getGameIcon(party.game)}
             </div>
             <div>
-              <h3 className="font-semibold text-lg text-text-primary">{party.title}</h3>
+              <h3 className="font-semibold text-lg text-text-primary">
+                {party.title}
+              </h3>
               <p className="text-text-secondary text-sm">{party.game}</p>
               {!showEditActions && (
                 <p className="text-accent-purple text-sm font-medium">
@@ -105,51 +117,51 @@ export default function PartyCard({
             </Badge>
           </div>
         </div>
-        
-        <p className="text-text-secondary text-sm mb-4 line-clamp-2">{party.description}</p>
-        
+
+        <p className="text-text-secondary text-sm mb-4 line-clamp-2">
+          {party.description}
+        </p>
+
         <div className="space-y-2 mb-4">
           <div className="flex items-center text-sm text-text-secondary">
             <Users className="h-4 w-4 mr-2 flex-shrink-0" />
-            <span>{party.attendeeCount}/{party.capacity} players</span>
+            <span>
+              {party.attendeeCount}/{party.capacity} players
+            </span>
           </div>
           <div className="flex items-center text-sm text-text-secondary">
             <Calendar className="h-4 w-4 mr-2 flex-shrink-0" />
             <span>
               {new Date(party.date).toLocaleDateString()} at{" "}
-              {new Date(party.date).toLocaleTimeString([], { 
-                hour: '2-digit', 
-                minute: '2-digit' 
+              {new Date(party.date).toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
               })}
             </span>
           </div>
           <div className="flex items-center text-sm text-text-secondary">
             <MapPin className="h-4 w-4 mr-2 flex-shrink-0" />
             <span>{party.location}</span>
-
           </div>
           {party.isAttending && party.address && (
-          <div className="flex items-center text-sm text-text-secondary">
-          <MapPin className="h-4 w-4 mr-2 flex-shrink-0" />
-          <span>{party.address}</span>
-          </div>
+            <div className="flex items-center text-sm text-text-secondary">
+              <MapPin className="h-4 w-4 mr-2 flex-shrink-0" />
+              <span>{party.address}</span>
+            </div>
           )}
-          
         </div>
-        
-        {/* Progress bar for capacity */}
+
         <div className="mb-4">
           <div className="flex justify-between text-sm text-text-secondary mb-1">
             <span>Capacity</span>
-            <span>{party.attendeeCount}/{party.capacity}</span>
+            <span>
+              {party.attendeeCount}/{party.capacity}
+            </span>
           </div>
-          <Progress 
-            value={capacityPercentage} 
-            className="h-2 bg-dark-secondary"
-          />
+          <Progress value={capacityPercentage} className="h-2 bg-dark-secondary" />
         </div>
-        
-        {showEditActions ? (
+
+        {showEditActions && !isPast ? (
           <div className="flex space-x-3">
             <Button
               onClick={onEdit}
@@ -159,11 +171,7 @@ export default function PartyCard({
               <Edit className="h-4 w-4 mr-2" />
               Edit
             </Button>
-            <Button
-              onClick={onCancel}
-              variant="destructive"
-              size="sm"
-            >
+            <Button onClick={onCancel} variant="destructive" size="sm">
               <Trash2 className="h-4 w-4 mr-2" />
               Cancel
             </Button>
